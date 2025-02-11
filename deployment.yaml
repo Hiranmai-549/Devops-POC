@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-app
+  name: test-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: python-app
+      app: test-app
   template:
     metadata:
       labels:
-        app: python-app
+        app: test-app
     spec:
       containers:
-        - name: python-container
-          image: your-docker-registry/python-app:latest
+        - name: test-container
+          image: test-registry/test-app:latest
           ports:
             - containerPort: 8080
