@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: python-service
+  name: test-service
 spec:
   selector:
-    app: python-app
+    app: test-app
   ports:
     - protocol: TCP
       port: 80
