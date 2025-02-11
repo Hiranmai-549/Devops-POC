@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone repository') {
+            steps {
+                git 'https://github.com/your-repo/python-k8s.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def buildNumber = env.BUILD_NUMBER
+                    sh 'docker build -t your-docker-registry/python-app:${buildNumber} .'
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    def buildNumber = env.BUILD_NUMBER
+                    sh 'docker push your-docker-registry/python-app:${buildNumber}'
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f service.yaml'
+                    sh 'kubectl apply -f hpa.yaml'
+                }
+            }
+        }
+    }
+}
